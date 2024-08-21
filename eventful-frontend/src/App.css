@@ -1,0 +1,22 @@
+/* Ensure the app container uses Flexbox to push footer to the bottom */
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensures the footer stays at the bottom of the viewport */
+}
+
+main {
+  flex: 1; /* Allows main content to take up available space */
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}

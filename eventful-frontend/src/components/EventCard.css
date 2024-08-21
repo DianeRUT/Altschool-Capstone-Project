@@ -1,0 +1,41 @@
+/* src/components/EventCard.css */
+.event-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 300px;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .event-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .event-card h3 {
+    margin: 0.5rem;
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  .event-card p {
+    margin: 0.5rem;
+    color: #666;
+  }
+  
+  .event-card a {
+    display: block;
+    text-align: center;
+    margin: 1rem;
+    padding: 0.5rem;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  
+  .event-card a:hover {
+    background-color: #0056b3;
+  }
+  
