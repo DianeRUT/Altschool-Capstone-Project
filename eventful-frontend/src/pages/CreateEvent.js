@@ -1,5 +1,6 @@
 // src/pages/CreateEvent.js
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './CreateEvent.css';
 
 const CreateEvent = () => {
@@ -11,6 +12,8 @@ const CreateEvent = () => {
     category: '',
   });
 
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEvent({ ...event, [name]: value });
@@ -19,11 +22,19 @@ const CreateEvent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Replace with your API endpoint
-      const response = await fetch('http://localhost:5000/api/events/events', {
+      const token = localStorage.getItem('authToken');
+
+      if (!token) {
+        alert('You need to be logged in to create an event.');
+        navigate('/login');
+        return;
+    }
+    
+      const response = await fetch('http://localhost:5000/api/events/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify(event),
       });
@@ -41,6 +52,7 @@ const CreateEvent = () => {
         category: '',
       });
       alert('Event created successfully!');
+      navigate('/events');
     } catch (error) {
       console.error('Error creating event:', error);
       alert('Failed to create event');

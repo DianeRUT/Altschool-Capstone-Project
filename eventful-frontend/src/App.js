@@ -11,6 +11,8 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import { AuthProvider } from './context/AuthContext'; 
 import PrivateRoute from './components/PrivateRoute';
+import UpdateEvent from './pages/updateEvent';
+import CreatorDashboard from './pages/CreatorDashboard';
 
 import './App.css';
 
@@ -23,11 +25,14 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/create" element={<CreateEvent />} />
+            <Route path="/create" element={<PrivateRoute><CreateEvent /></PrivateRoute>} />
             <Route path="/events" element={<Events />} />
             <Route path="/events/:id" element={<EventDetails />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/events/update/:id" element={<UpdateEvent />} />
+            <Route path="/creator-dashboard" element={<PrivateRoute requiredRole="creator">
+              <CreatorDashboard /></PrivateRoute>} />
             <Route 
                 path="/profile" 
                 element={
@@ -39,6 +44,7 @@ function App() {
         
           </Routes>
         </main>
+        
         <Footer />
       </div>
     </Router>

@@ -13,10 +13,16 @@ const Login = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        const { success, token, message } = await apiLogin(email, password);
+        const { success, token, user, message } = await apiLogin(email, password);
+        
         if (success) { 
-            login(token);
-            navigate('/profile');
+            login(token, user);
+            
+            if (user.role === 'creator') {
+                navigate('/creator-dashboard');
+             } else{
+                navigate('/profile');
+                }
         } else {
             
             alert(message);

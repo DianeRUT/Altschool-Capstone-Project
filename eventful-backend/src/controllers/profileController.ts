@@ -9,12 +9,12 @@ const getProfile = async (req: UAuthRequest, res: Response) => {
     try {
         const user = await User.findById(req.user?.id).select('-password');
         if (!user) {
-            return res.status(404).json({ success: false, message: 'User not found' });
+            return res.status(404).json({ msg: 'User not found' });
         }
-        res.json({ success: true, data: user });
+        res.json({ profile: user });
     } catch (error) {
-        console.error('Server error:', error);
-        res.status(500).json({ success: false, message: 'Server error' });
+        // console.error('Server error:', error);
+        res.status(500).json({msg: 'Server error' });
     }
 };
 

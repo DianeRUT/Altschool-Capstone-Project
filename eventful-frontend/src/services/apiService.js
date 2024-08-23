@@ -1,9 +1,6 @@
-// src/services/apiService.js
-const API_URL = 'http://localhost:5000/api'; // Adjust if necessary
-
 export const apiLogin = async (email, password) => {
   try {
-    const response = await fetch(`${API_URL}/auth/login`, {
+    const response = await fetch('http://localhost:5000/api/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -12,18 +9,18 @@ export const apiLogin = async (email, password) => {
     });
     const data = await response.json();
     if (response.ok) {
-      return { success: true, token: data.token };
+      return { success: true, token: data.token, user: data.user };
     } else {
       return { success: false, message: data.msg || 'Login failed' };
     }
   } catch (error) {
-    return { success: false, message: 'Network error' };
+    return { success: false, message: 'Error logging in' };
   }
 };
 
 export const apiSignup = async (name, email, password, role) => {
   try {
-    const response = await fetch(`${API_URL}/auth/register`, {
+    const response = await fetch('http://localhost:5000/api/auth/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -44,7 +41,7 @@ export const apiSignup = async (name, email, password, role) => {
 export const apiGetProfile = async () => {
   const token = localStorage.getItem('authToken');
   try {
-    const response = await fetch(`${API_URL}/auth/profile`, {
+    const response = await fetch('http://localhost:5000/api/auth/profile', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -66,7 +63,7 @@ export const apiGetProfile = async () => {
 export const apiUpdateProfile = async (updatedProfile) => {
   const token = localStorage.getItem('authToken');
   try {
-    const response = await fetch(`${API_URL}/auth/profile`, {
+    const response = await fetch('http://localhost:5000/api/auth/profile', {
       method: 'PUT',
       headers: {
         'Authorization': `Bearer ${token}`,

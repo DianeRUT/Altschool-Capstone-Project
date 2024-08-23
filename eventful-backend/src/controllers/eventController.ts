@@ -45,3 +45,49 @@ export const getAllEvents = async (req: Request, res: Response) => {
         res.status(500).json({ error: 'Error fetching events' });
     }
 };
+
+export const updateEvent = async (req: AuthRequest, res: Response) => {
+    try {
+        const { id } = req.params;
+        const updates = req.body;
+
+        
+        const event = await Event.findOneAndUpdate(
+            { _id: id, createdBy: req.user?.id },
+            updates,
+            { new: true }
+        );
+
+        if (!event) {
+            return res.status(404).json({ error: 'Event not found or not authorized to update' });
+        }
+
+        res.status(200).json(event);
+    } catch (error) {
+        console.error('Error updating event:', error);
+        res.status(500).json({ error: 'Error updating event' });
+    }
+};
+
+export const deleteEvent = async (req: AuthRequest, res: Response) => {
+    try {
+        if (req.user?.role !== 'creator') {
+            return res.status(403).json({ message: 'Forbidden: Only creators can delete events' });
+
+    }
+        const event = await Event.findById(req.params.id);
+
+        if (!event) {
+            return res.status(404).json({ message: 'Event not found' });
+        }
+
+        if (event.createdBy.toString() !== req.user!.id) {
+            return res.status(403).json({ message: 'Forbidden: You are not authorized to delete this event' });
+        }
+
+        await event.deleteOne();
+        res.status(200).json({ message: 'Event deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ error: 'Error deleting event' });
+    }
+};

@@ -5,8 +5,8 @@ export interface IEvent extends Document {
     description: string;
     date: Date;
     location: string;
-    createdBy: mongoose.Types.ObjectId;  // Reference to the user who created the event
-    attendees: mongoose.Types.ObjectId[]; // Array of users attending the event
+    createdBy: mongoose.Types.ObjectId;  
+    attendees: mongoose.Types.ObjectId[]; 
 }
 
 const EventSchema: Schema = new Schema({
